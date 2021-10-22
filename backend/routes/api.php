@@ -19,6 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix' => 'activities'], function(){
-    Route::get('/', 'ActivitiesController@index');
+Route::namespace('Api')->name('api.')->group(function () {
+       
+    Route::group(['prefix' => 'activities'], function(){
+        Route::get('/', 'ActivitiesController@index');
+    });
+       
 });

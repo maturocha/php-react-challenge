@@ -17,6 +17,7 @@ class CreateActivitiesTable extends Migration
 
             $table->increments('id');
             $table->string('title', 64);
+            $table->string('slug')->unique();
             $table->text('description');
             $table->date('date_start');
             $table->date('date_end');

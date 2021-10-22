@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Activities;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ActivitiesController extends Controller
 {
@@ -12,9 +15,9 @@ class ActivitiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request) : JsonResponse
     {
-        //
+        return response()->json($this->paginatedQuery($request));
     }
 
     /**
@@ -81,5 +84,28 @@ class ActivitiesController extends Controller
     public function destroy(activities $activities)
     {
         //
+    }
+
+        /**
+     * Get the paginated resource query.
+     *
+     * @param Illuminate\Http\Request
+     *
+     * @return Illuminate\Pagination\LengthAwarePaginator
+     */
+    protected function paginatedQuery(Request $request) : LengthAwarePaginator
+    {
+        $activities = Activities::orderBy(
+             'popularity',
+             'ASC'
+        )
+        ->when($request->has('search'), function ($query) use ($request) {
+            $search = $request->input('search');
+            return $query->where(function($q) use ($search) {
+                $q->whereDate('date_start', $search);
+            });
+        });
+
+        return $activities->paginate(12);
     }
 }

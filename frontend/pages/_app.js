@@ -1,7 +1,41 @@
-import '../styles/globals.css'
+import 'tailwindcss/tailwind.css'
+import Head from 'next/head'
+import Header from '../components/partials/Header'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const App = ({ Component, pageProps }) => {
+ 
+  return (
+    <>
+      <Head>
+        <title>Civitatis Challenge | Mati Rocha</title>
+        <meta content="initial-scale=1.0, width=device-width" name="viewport" />
+        <meta content="matur" name="author" />
+        <meta content="Matías Rocha" name="copyright" />
+      </Head>
 
-export default MyApp
+      <Header />
+
+      <main className="py-2 overflow-x-hidden">
+
+        <Component {...pageProps} />
+
+      </main>
+
+      <footer className="flex items-center justify-center w-full h-24 border-t">
+        <a
+          className="flex items-center justify-center"
+          href="https://maturocha.com.ar"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          By Mati Rocha 🇦🇷
+        </a>
+      </footer>
+  
+      
+      
+    </>
+  );
+};
+
+export default App;
