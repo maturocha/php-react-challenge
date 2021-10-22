@@ -7,6 +7,8 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class Activities extends Model
 {
+    use Sluggable;
+    
      /**
      * The attributes that are mass assignable.
      *
