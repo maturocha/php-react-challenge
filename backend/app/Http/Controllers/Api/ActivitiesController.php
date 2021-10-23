@@ -20,6 +20,19 @@ class ActivitiesController extends Controller
         return response()->json($this->paginatedQuery($request));
     }
 
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function related($id) : JsonResponse
+    {
+        $activity = Activities::findOrFail($id);
+        $related = Activities::where('date_start', $activity->date_start)
+                    ->where('popularity', $activity->popularity)->limit(3)->get();;
+        return response()->json($related);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -47,9 +60,12 @@ class ActivitiesController extends Controller
      * @param  \App\activities  $activities
      * @return \Illuminate\Http\Response
      */
-    public function show(activities $activities)
+    public function show($slug)
     {
         //
+        $activity = Activities::where('slug', $slug)->firstOrFail();
+
+        return response()->json($activity);
     }
 
     /**

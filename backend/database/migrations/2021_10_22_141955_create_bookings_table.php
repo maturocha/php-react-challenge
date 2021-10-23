@@ -24,11 +24,13 @@ class CreateBookingsTable extends Migration
                     ->onDelete('cascade');
 
             $table->string('email');
+            $table->string('fullname');
+
+            $table->unique(['email', 'activity_id']);
 
             $table->integer('quantity');
             $table->decimal('price_booking', 10, 2);
             $table->date('date_booking');
-            $table->date('date_activity');
 
             $table->softDeletes();
             $table->timestamps();

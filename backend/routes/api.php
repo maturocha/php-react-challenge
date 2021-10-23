@@ -23,6 +23,13 @@ Route::namespace('Api')->name('api.')->group(function () {
        
     Route::group(['prefix' => 'activities'], function(){
         Route::get('/', 'ActivitiesController@index');
+        Route::get('/{slug}', 'ActivitiesController@show');
+        Route::get('/{id}/related', 'ActivitiesController@related');
+    });
+
+    Route::group(['prefix' => 'booking'], function(){
+        Route::get('/', 'BookingsController@index');
+        Route::post('/add', 'BookingsController@store');
     });
        
 });

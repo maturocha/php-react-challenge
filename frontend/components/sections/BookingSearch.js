@@ -1,33 +1,27 @@
 import {useState} from "react";
-import Results from './Results'
+import BookingResults from './BookingResults'
 
-import { getActivities } from '../../lib/activities/getActivities';
-import { isDateBeforeToday } from '../../helpers/dates';
+import { getBookings } from '../../lib/booking/getBookings';
 
-const Search = () => {
+const BookingSearch = () => {
 
-  const [date, setdate] = useState(0);
+  const [email, setEmail] = useState('');
   const [list, setList] = useState([]);
   const [message, setMessage] = useState('');
 
-  const onSearch = async (date) => {
+  const onSearch = async (email) => {
 
     setMessage('')
 
-    if (isDateBeforeToday(new Date(date))) {
-      setMessage('Fecha anterior a hoy')
-      return null
-    }
-
-    const activities = await getActivities({
-      search: date
+    const bookings = await getBookings({
+      search: email
     });
 
-    if (activities.length == 0) {
+    if (bookings.length == 0) {
       setMessage('No hay resultados')
     }
 
-    setList(activities)
+    setList(bookings)
 
     return true
 
@@ -35,21 +29,22 @@ const Search = () => {
   
   return <>
       <h1 className="text-4xl font-bold text-center">
-        Buscador de actividades
+        Mis reservas
       </h1>
       <div className="flex items-center justify-center max-w-4xl mt-6 sm:w-full">
           <div className="flex border-2 border-gray-200 rounded">
               <input 
-                 type="date"
-                 value={date}
-                 onChange={(event) => setdate(event.target.value)}
+                 type="email"
+                 placeholder='Tu email'
+                 value={email}
+                 onChange={(event) => setEmail(event.target.value)}
                   className="px-4 py-2 w-80"
                  />
               <button 
                 className="px-4 text-white bg-pink border-l"
-                onClick={() => onSearch(date)}
+                onClick={() => onSearch(email)}
                 >
-                Buscar Actividades
+                Buscar
               </button>
           </div>
       </div>
@@ -59,7 +54,7 @@ const Search = () => {
       }
       
       {list && list.length > 0 &&
-        <Results data={list} />
+        <BookingResults data={list} />
     }
 
   </>;
@@ -67,4 +62,4 @@ const Search = () => {
   
 }
 
-export default Search;
+export default BookingSearch;
