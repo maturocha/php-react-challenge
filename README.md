@@ -22,7 +22,7 @@ Frontend
 1. Node.js or later
 2. npm package manager
 
-# Frontend Readme
+## Frontend Readme
 
 In the frontend we use NextJS, the React Framework. 
 1. Run the following command:
